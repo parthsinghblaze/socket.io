@@ -22,8 +22,8 @@
             const button = document.querySelector('button')
 
             button.addEventListener('click', (e) => {
-                console.log("value", input.value)
-                socket.send(input.value)
+                console.log("value", input.value);
+                socket.send(input.value);
             })
 
             socket.on('message', function (message) {
