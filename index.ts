@@ -15,8 +15,17 @@ app.get('/', function (req, res) {
 });
 
 const io = new Server(server);
-
+const sockets: any = []
 io.on('connection', function (socket) {
+  sockets.push(socket);
+  console.log("sockets", sockets.length);
+  socket.on('message', function (message) {
+    for (let i = 0; i < sockets.length; i++) {
+      console.log("message", message);
+      console.log("sockets", sockets.length)
+      sockets[i].send(message);
+    }
+  });
   socket.emit('greeting-from-server', {
     greeting: 'Hello Client'
   });
