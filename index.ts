@@ -16,10 +16,10 @@ app.get('/', function (req, res) {
 
 const io = new Server(server);
 const sockets: any = []
-io.on('connection', function (socket) {
+io.on('connection', function (socket: any) {
   sockets.push(socket);
   console.log("sockets", sockets.length);
-  socket.on('message', function (message) {
+  socket.on('message', function (message: any) {
     for (let i = 0; i < sockets.length; i++) {
       console.log("message", message);
       console.log("sockets", sockets.length)
@@ -28,7 +28,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () {
-    for (var i = 0; i < sockets.length; i++) {
+    for (let i = 0; i < sockets.length; i++) {
       if (sockets[i].id === socket.id) {
         sockets .splice(i, 1);
       }
@@ -40,7 +40,7 @@ io.on('connection', function (socket) {
   socket.emit('greeting-from-server', {
     greeting: 'Hello Client'
   });
-  socket.on('greeting-from-client', function (message) {
+  socket.on('greeting-from-client', function (message: any) {
     console.log(message);
   });
 });
