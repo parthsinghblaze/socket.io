@@ -8,45 +8,16 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello I am HTML</h1>
-    <input type="text" placeholder="Enter text" />
-    <button>Send</button>
-    <div id="messages"></div>
+    <h1>Welcome to the index page</h1>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        var socket = io('http://localhost:8000');
+        let socket = io('http://localhost:8000');
 
-        socket.on('connect', function () {
+        console.log('socket', socket)
 
-            const input = document.querySelector('input')
-            const button = document.querySelector('button')
-
-            button.addEventListener('click', (e) => {
-                console.log("value", input.value);
-                socket.send(input.value);
-            })
-
-            socket.on('message', function (message) {
-                let messageNode =
-                        document.createTextNode(message),
-                    messageElement =
-                        document.createElement('p');
-                messageElement.appendChild(messageNode);
-                document.getElementById('messages').appendChild(messageElement);
-            })
-
-            console.log("I am connected")
+        socket.on('connect', () => {
+            console.log('connected')
         })
-
-        // socket.on('greeting-from-server', function
-        //     (message) {
-        //     document.body.appendChild(
-        //         document.createTextNode(message.greeting)
-        //     );
-        //     socket.emit('greeting-from-client', {
-        //         greeting: 'Hello Server'
-        //     });
-        // });
     </script>
 </body>
 </html>
