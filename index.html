@@ -11,17 +11,26 @@
 <body>
 <div class="container">
     <h1>Welcome to the room</h1>
-    <form>
-        <div class="mb-3">
-            <label for="username" class="form-label">User Name</label>
-            <input type="text" class="form-control" id="username" aria-describedby="username">
+    <div class="row">
+        <div class="col-8">
+            <form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">User Name</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="username">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <input type="text" class="form-control" id="message">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="message" class="form-label">Message</label>
-            <input type="text" class="form-control" id="message">
+        <div class="col-4">
+            <h5>Users</h5>
+            <div id="users">
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
     <hr>
     <div id="messages">
 
@@ -49,6 +58,16 @@
                 let div = document.querySelector('#messages')
                 const { username, message } = data;
                 div.insertAdjacentHTML('afterbegin', `<div>${username}: ${message}</div>`)
+            })
+
+            socket.on('user.connected', (id) => {
+                let div = document.querySelector('#users')
+                div.insertAdjacentHTML('afterbegin', `<div id=${id}>${id}</div>`)
+            })
+
+            socket.on('user.disconnected', (id) => {
+                console.log('id',id)
+                document.querySelector(`#${id}`).remove()
             })
 
         })

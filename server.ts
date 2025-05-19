@@ -21,11 +21,14 @@ io.on('connection', (socket) => {
 
     socket.on('message.send', function (data) {
         console.log(data)
-        io.emit('message.sent', data)
+        socket.emit('message.sent', data)
     })
+
+    socket.emit('user.connected', socket.id)
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
+        socket.emit('user.disconnected', socket.id)
     });
 });
 
